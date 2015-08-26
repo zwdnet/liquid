@@ -10,15 +10,15 @@ class LiquidBox(QWidget):
     # 模拟流体力学程序，盛着液体的盒子
     def __init__(self):
         super().__init__()
-        self.speed = 100  #重绘速度100ms
-        self.WindowSize = 400
+        self.speed = 1000  #重绘速度1s
+        self.WindowSize = 200
         self.timer = QBasicTimer()
         self.sim = sm.Stimulator(self.WindowSize)
         self.initUI()
 
     def initUI(self):
-        self.setGeometry(200, 200, 200+self.WindowSize, 200+self.WindowSize)
-        self.setFixedSize(self.WindowSize, self.WindowSize)
+        self.setGeometry(200, 200, 800, 800)
+        self.setFixedSize(600, 600)
         self.setWindowTitle("流体力学模拟程序")
         self.timer.start(self.speed, self)
         self.show()
@@ -53,12 +53,14 @@ class LiquidBox(QWidget):
         #     for j in range(size.height()):
         #         if points[i][j] == 1:
         #             qp.drawPoint(i, j)
+        # points = self.sim.step()
+        # for i in range(self.WindowSize):
+        #     for j in range(self.WindowSize):
+        #         if points[i][j] == 1:
+        #             qp.drawPoint(i, j)
         points = self.sim.step()
-        for i in range(self.WindowSize):
-            for j in range(self.WindowSize):
-                if points[i][j] == 1:
-                    qp.drawPoint(i, j)
-
+        for i in range(len(points)):
+            qp.drawPoint(points[i][0], points[i][1])
 
 
 if __name__ == "__main__":
