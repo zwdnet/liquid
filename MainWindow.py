@@ -10,15 +10,15 @@ class LiquidBox(QWidget):
     # 模拟流体力学程序，盛着液体的盒子
     def __init__(self):
         super().__init__()
-        self.speed = 1000  #重绘速度1s
-        self.WindowSize = 200
+        self.speed = 100  #重绘速度1s
+        self.WindowSize = 50
         self.timer = QBasicTimer()
         self.sim = sm.Stimulator(self.WindowSize)
         self.initUI()
 
     def initUI(self):
-        self.setGeometry(200, 200, 800, 800)
-        self.setFixedSize(600, 600)
+        self.setGeometry(200, 200, 600, 600)
+        self.setFixedSize(400, 400)
         self.setWindowTitle("流体力学模拟程序")
         self.timer.start(self.speed, self)
         self.show()
@@ -40,27 +40,9 @@ class LiquidBox(QWidget):
     #具体绘图函数
     def Draw(self, qp):
         qp.setPen(Qt.blue)
-        #先用一个随机作图函数代替，以后改成模拟程序
-        # size = self.size()
-        # points = [[1 for x in range(size.width())] for y in range(size.height())]
-        # for i in range(5000):
-        #     x = random.randint(1, size.width()-1)
-        #     y = random.randint(1, size.height()-1)
-        #     points[x][y] = 2
-        #     qp.drawPoint(x, y)
-        # qp.setPen(Qt.black)
-        # for i in range(size.width()):
-        #     for j in range(size.height()):
-        #         if points[i][j] == 1:
-        #             qp.drawPoint(i, j)
-        # points = self.sim.step()
-        # for i in range(self.WindowSize):
-        #     for j in range(self.WindowSize):
-        #         if points[i][j] == 1:
-        #             qp.drawPoint(i, j)
         points = self.sim.step()
         for i in range(len(points)):
-            qp.drawPoint(points[i][0], points[i][1])
+            qp.drawPoint(int(points[i][0]), int(points[i][1]))
 
 
 if __name__ == "__main__":
